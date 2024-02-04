@@ -1,6 +1,7 @@
 ---
 import LogoSvg from '../assets/logo.svg'
 import { Image } from 'astro:assets';
+import HamburgerIcon from '../assets/icon-hamburger.svg'
 
 const listLink = [
   {
@@ -48,12 +49,33 @@ const listLink = [
         ))}
       </ul>
     </nav>
-    <div class="flex-grow basis-0 flex justify-end">
+    <div class="flex-grow basis-0 justify-end hidden lg:flex">
       <a href="#" class="button-primary">Request Invite</a>
     </div>
+    <div class="lg:hidden">
+      <button class="mt-2" id="button_hamburguer">
+        <Image src={HamburgerIcon} alt='icon Hamburger' class='w-10'/>
+      </button>
+    </div>
     <div class="absolute h-1 w-[var(--width)] opacity-[var(--opacity)] bottom-0 duration-300 bg-gradient-to-r from-limeGreen to-brightCyan left-[var(--left)]" id="line"/>
-  </div>
+    </div>
+    <div class="mt-4 w-full overflow-hidden h-0" id="container">
+      <nav class="w-10/12 mx-auto py-7 rounded-lg bg-white">
+        <ul class="flex flex-col items-center gap-7">
+          {listLink.map(({ name, link }) => (
+            <li>
+              <a href={link}>{name}</a>
+            </li>
+            ))}
+        </ul>
+      </nav>
+    </div>
 </header>
+<style>
+  .isActive {
+    height: auto;
+  }
+</style>
 <script>
   const list_link = document.querySelectorAll('#link')
   const line = document.querySelector('#line') as HTMLElement
@@ -80,4 +102,11 @@ const listLink = [
       line.style.setProperty("--opacity", '0')
     })
   });
+
+  const buttonHamburguer = document.querySelector('#button_hamburguer') as HTMLElement
+  const container = document.querySelector('#container') as HTMLElement
+  buttonHamburguer.addEventListener('click' , () => {
+    container.classList.toggle('isActive')
+  })
+
 </script>
